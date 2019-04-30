@@ -6,7 +6,13 @@
 
     <groupId>fr.wastemart.maven.annotationprocess</groupId>
     <artifactId>annotation-processor</artifactId>
-    <version>12</version>
+    <version>1</version>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.google.auto.service</groupId>
@@ -20,4 +26,5 @@
             <version>1.11.1</version>
         </dependency>
     </dependencies>
+
 </project>
