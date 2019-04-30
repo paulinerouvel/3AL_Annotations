@@ -1,9 +1,6 @@
-package annotationprocessor;
+package processor;
+import annotation.Factory;
 import com.google.auto.service.AutoService;
-import com.squareup.javapoet.JavaFile;
-import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.TypeName;
-import com.squareup.javapoet.TypeSpec;
 
 import javax.annotation.processing.*;
 import javax.lang.model.*;
@@ -13,25 +10,8 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
-import javax.tools.JavaFileObject;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.*;
-
-/*
-@SupportedSourceVersion(SourceVersion.RELEASE_12)
-@SupportedAnnotationTypes({
-        // Set of full qullified annotation type names
-})
-public class MyProcessor extends AbstractProcessor {
-
-    @Override
-    public synchronized void init(ProcessingEnvironment env){ }
-
-    @Override
-    public boolean process(Set<? extends TypeElement> annoations, RoundEnvironment env) { }
-}
-*/
 
 @AutoService(Processor.class)
 public class FactoryProcessor extends AbstractProcessor {
@@ -55,7 +35,7 @@ public class FactoryProcessor extends AbstractProcessor {
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> annotataions = new LinkedHashSet<String>();
-        annotataions.add(Documentation.Factory.class.getCanonicalName());
+        annotataions.add(Factory.class.getCanonicalName());
         return annotataions;
     }
 
@@ -66,13 +46,23 @@ public class FactoryProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+        try {
+            for (FactoryGroupedClasses factoryClass : factoryClasses.values()) {
+                factoryClass.generateCode(elementUtils, filer);
+            }
 
+            // Clear to fix the problem
+            factoryClasses.clear();
+
+        } catch (IOException e) {
+            error(null, e.getMessage());
+        }
         // Itearate over all @Factory annotated elements
-        for (Element annotatedElement : roundEnv.getElementsAnnotatedWith(Documentation.Factory.class)) {
+        for (Element annotatedElement : roundEnv.getElementsAnnotatedWith(Factory.class)) {
             // Check if a non class has been annotated with @Factory
             if (annotatedElement.getKind() != ElementKind.CLASS) {
                 error(annotatedElement, "Only classes can be annotated with @%s",
-                        Documentation.Factory.class.getSimpleName());
+                        Factory.class.getSimpleName());
                 return true; // Exit processing
             }
 
@@ -101,19 +91,21 @@ public class FactoryProcessor extends AbstractProcessor {
                 // another @Factory annotated class with the same id
                 factoryClass.add(annotatedClass);
 
+            } catch (ProcessingException e) {
+                this.error(e.getElement(), e.getMessage());
             } catch (IllegalArgumentException e) {
                 // @Factory.id() is empty
                 error(typeElement, e.getMessage());
                 return true;
-            } catch (IdAlreadyUsedException e) {
+            }
+             /*catch (IdAlreadyUsedException e) {
                 FactoryAnnotatedClass existing = e.getExisting();
                 // Already existing
                 error(annotatedElement,
                         "Conflict: The class %s is annotated with @%s with id ='%s' but %s already uses the same id",
-                        typeElement.getQualifiedName().toString(), Documentation.Factory.class.getSimpleName(),
+                        typeElement.getQualifiedName().toString(), Factory.class.getSimpleName(),
                         existing.getTypeElement().getQualifiedName().toString());
-                return true;
-            }
+                return true;*/
 
         }
 
@@ -149,7 +141,7 @@ public class FactoryProcessor extends AbstractProcessor {
         // Check if it's an abstract class
         if (classElement.getModifiers().contains(Modifier.ABSTRACT)) {
             error(classElement, "The class %s is abstract. You can't annotate abstract classes with @%",
-                    classElement.getQualifiedName().toString(), Documentation.Factory.class.getSimpleName());
+                    classElement.getQualifiedName().toString(), Factory.class.getSimpleName());
             return false;
         }
 
@@ -160,7 +152,7 @@ public class FactoryProcessor extends AbstractProcessor {
             // Check interface implemented
             if (!classElement.getInterfaces().contains(superClassElement.asType())) {
                 error(classElement, "The class %s annotated with @%s must implement the interface %s",
-                        classElement.getQualifiedName().toString(), Documentation.Factory.class.getSimpleName(),
+                        classElement.getQualifiedName().toString(), Factory.class.getSimpleName(),
                         item.getQualifiedFactoryGroupName());
                 return false;
             }
@@ -172,7 +164,7 @@ public class FactoryProcessor extends AbstractProcessor {
                 if (superClassType.getKind() == TypeKind.NONE) {
                     // Basis class (java.lang.Object) reached, so exit
                     error(classElement, "The class %s annotated with @%s must inherit from %s",
-                            classElement.getQualifiedName().toString(), Documentation.Factory.class.getSimpleName(),
+                            classElement.getQualifiedName().toString(), Factory.class.getSimpleName(),
                             item.getQualifiedFactoryGroupName());
                     return false;
                 }

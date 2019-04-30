@@ -1,5 +1,6 @@
-package annotationprocessor;
+package processor;
 
+import annotation.Factory;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
@@ -38,7 +39,7 @@ public class FactoryGroupedClasses {
         if (existing != null) {
             throw new ProcessingException(toInsert.getTypeElement(),
                     "Conflict: The class %s is annotated with @%s with id ='%s' but %s already uses the same id",
-                    toInsert.getTypeElement().getQualifiedName().toString(), Documentation.Factory.class.getSimpleName(),
+                    toInsert.getTypeElement().getQualifiedName().toString(), Factory.class.getSimpleName(),
                     toInsert.getId(), existing.getTypeElement().getQualifiedName().toString());
         }
 

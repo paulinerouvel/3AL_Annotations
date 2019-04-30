@@ -1,7 +1,8 @@
-package annotationprocessor;
+package factory_sample;
+import factory_sample.Meal;
+import annotation.Factory;
 
-
-@Documentation.Factory(
+@Factory(
         id = "Calzone",
         type = Meal.class
 )

@@ -1,4 +1,6 @@
-package annotationprocessor;
+package processor;
+
+import annotation.Factory;
 
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
@@ -13,13 +15,13 @@ public class FactoryAnnotatedClass {
 
     public FactoryAnnotatedClass(TypeElement classElement) throws IllegalArgumentException {
         this.annotatedClassElement = classElement;
-        Documentation.Factory annotation = classElement.getAnnotation(Documentation.Factory.class);
+        Factory annotation = classElement.getAnnotation(Factory.class);
         id = annotation.id();
 
         if (id.length() == 0) {
             throw new IllegalArgumentException(
                     String.format("id() in @%s for class %s is null or empty! that's not allowed",
-                            Documentation.Factory.class.getSimpleName(), classElement.getQualifiedName().toString()));
+                            Factory.class.getSimpleName(), classElement.getQualifiedName().toString()));
         }
 
         // Get the full QualifiedTypeName
@@ -36,7 +38,7 @@ public class FactoryAnnotatedClass {
     }
 
     /**
-     * Get the id as specified in {@link Documentation.Factory#id()}.
+     * Get the id as specified in {@link Factory#id()}.
      * return the id
      */
     public String getId() {
@@ -44,7 +46,7 @@ public class FactoryAnnotatedClass {
     }
 
     /**
-     * Get the full qualified name of the type specified in  {@link Documentation.Factory#type()}.
+     * Get the full qualified name of the type specified in  {@link Factory#type()}.
      *
      * @return qualified name
      */
@@ -54,7 +56,7 @@ public class FactoryAnnotatedClass {
 
 
     /**
-     * Get the simple name of the type specified in  {@link Documentation.Factory#type()}.
+     * Get the simple name of the type specified in  {@link Factory#type()}.
      *
      * @return qualified name
      */

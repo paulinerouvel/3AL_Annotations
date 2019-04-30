@@ -1,4 +1,4 @@
-package annotationprocessor;
+package processor;
 
 /**
  * Implémente une exception si l'id demandé est déjà utilisé.
