@@ -30,9 +30,11 @@
         <!-- Auto service annotation processor -->
         <dependency>
             <groupId>com.google.auto.service</groupId>
-            <artifactId>auto-service-annotations</artifactId>
+            <artifactId>auto-service</artifactId>
             <version>1.0-rc5</version>
+            <optional>true</optional>
         </dependency>
+
 
     </dependencies>
 
@@ -46,11 +48,6 @@
                     <source>12</source>
                     <target>12</target>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
             </plugin>
 
         </plugins>

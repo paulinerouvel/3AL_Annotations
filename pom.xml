@@ -14,6 +14,17 @@
         <module>processor</module>
     </modules>
 
+
+    <dependencies>
+        <dependency>
+            <groupId>com.google.auto.service</groupId>
+            <artifactId>auto-service</artifactId>
+            <version>1.0-rc5</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+
     <build>
         <pluginManagement>
             <plugins>
@@ -36,10 +47,41 @@
                     </executions>
                 </plugin>
 
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.58</version>
+                    <executions>
+                        <execution>
+                            <id>process-annotations</id>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                            <configuration>
+                                <compilerArgs>
+                                    <arg>-proc:only</arg>
+                                    <arg>-processor</arg>
+                                    <arg>FactoryProcessor</arg>
+                                </compilerArgs>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>default-compile</id> <!-- using an id of default-compile will override the default execution -->
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                            <configuration>
+                                <compilerArgs>
+                                    <arg>-proc:none</arg>
+                                </compilerArgs>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
             </plugins>
-
-
         </pluginManagement>
     </build>
-
 </project>

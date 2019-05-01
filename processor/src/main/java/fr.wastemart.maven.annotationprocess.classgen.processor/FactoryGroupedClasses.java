@@ -1,10 +1,10 @@
 package fr.wastemart.maven.annotationprocess.classgen.processor;
 
-import fr.wastemart.maven.annotationprocess.classgen.annotation.Factory;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import fr.wastemart.maven.annotationprocess.classgen.annotation.Factory;
 
 import javax.annotation.processing.Filer;
 import javax.lang.model.element.Modifier;

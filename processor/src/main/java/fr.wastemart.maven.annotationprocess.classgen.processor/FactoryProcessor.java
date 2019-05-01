@@ -1,5 +1,6 @@
 package fr.wastemart.maven.annotationprocess.classgen.processor;
 
+import com.google.auto.service.AutoService;
 import fr.wastemart.maven.annotationprocess.classgen.annotation.Factory;
 
 import javax.annotation.processing.*;
