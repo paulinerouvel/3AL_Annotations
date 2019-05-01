@@ -4,29 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>fr.wastemart.maven.annotationprocess</groupId>
-    <artifactId>annotation-processor</artifactId>
-    <version>1</version>
+    <groupId>fr.wastemart.maven.annotationprocess.classgen</groupId>
+    <artifactId>parent</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0</version>
 
-    <properties>
-        <maven.compiler.source>12</maven.compiler.source>
-        <maven.compiler.target>12</maven.compiler.target>
-        <compilerArgument>-proc:none</compilerArgument>
-    </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.google.auto.service</groupId>
-            <artifactId>auto-service</artifactId>
-            <version>1.0-rc5</version>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>com.squareup</groupId>
-            <artifactId>javapoet</artifactId>
-            <version>1.11.1</version>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>annotation</module>
+        <module>processor</module>
+    </modules>
 
     <build>
         <pluginManagement>
@@ -35,36 +21,24 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.58</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
                     <executions>
                         <execution>
-                            <id>process-annotations</id>
-                            <phase>generate-sources</phase>
+                            <id>attach-sources</id>
                             <goals>
-                                <goal>compile</goal>
+                                <goal>jar</goal>
                             </goals>
-                            <configuration>
-                                <compilerArgs>
-                                    <arg>-proc:only</arg>
-                                    <arg>-processor</arg>
-                                    <arg>FactoryProcessor</arg>
-                                </compilerArgs>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>default-compile</id> <!-- using an id of default-compile will override the default execution -->
-                            <phase>compile</phase>
-                            <goals>
-                                <goal>compile</goal>
-                            </goals>
-                            <configuration>
-                                <compilerArgs>
-                                    <arg>-proc:none</arg>
-                                </compilerArgs>
-                            </configuration>
                         </execution>
                     </executions>
                 </plugin>
+
             </plugins>
+
+
         </pluginManagement>
     </build>
 
