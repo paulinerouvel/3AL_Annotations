@@ -1,6 +1,5 @@
 package fr.wastemart.maven.classgen.classes;
-import factory_sample.Meal;
-import annotation.Factory;
+import fr.wastemart.maven.annotationprocess.classgen.annotation.Factory;
 
 @Factory(
         id = "Margherita",

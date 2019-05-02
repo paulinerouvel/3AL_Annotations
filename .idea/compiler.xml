@@ -2,8 +2,14 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="annotation" target="8" />
-      <module name="processor" target="8" />
+      <module name="annotation" target="1.8" />
+      <module name="processor" target="12" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="annotation" options="" />
+      <module name="processor" options="-proc:none" />
+    </option>
   </component>
 </project>

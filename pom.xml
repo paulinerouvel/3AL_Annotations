@@ -28,11 +28,11 @@
     <build>
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.58</version>
-                </plugin>
+                <!--<plugin>-->
+                    <!--<groupId>org.apache.maven.plugins</groupId>-->
+                    <!--<artifactId>maven-compiler-plugin</artifactId>-->
+                    <!--<version>3.58</version>-->
+                <!--</plugin>-->
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -50,7 +50,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.58</version>
+                    <version>3.8.0</version>
                     <executions>
                         <execution>
                             <id>process-annotations</id>
@@ -59,11 +59,14 @@
                                 <goal>compile</goal>
                             </goals>
                             <configuration>
-                                <compilerArgs>
+                                <compilerArgument>
+                                    -proc:none
+                                </compilerArgument>
+                                <!--<compilerArgs>
                                     <arg>-proc:only</arg>
                                     <arg>-processor</arg>
-                                    <arg>FactoryProcessor</arg>
-                                </compilerArgs>
+                                    <arg>fr.wastemart.maven.annotationprocess.classgen.processor.FactoryProcessor</arg>
+                                </compilerArgs> TEST-->
                             </configuration>
                         </execution>
                         <execution>

@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/annotation/annotation.iml" filepath="$PROJECT_DIR$/annotation/annotation.iml" />
-      <module fileurl="file://$PROJECT_DIR$/annotation_java_wastemart.iml" filepath="$PROJECT_DIR$/annotation_java_wastemart.iml" />
+      <module fileurl="file://$PROJECT_DIR$/classgen_sample.iml" filepath="$PROJECT_DIR$/classgen_sample.iml" />
       <module fileurl="file://$PROJECT_DIR$/processor/processor.iml" filepath="$PROJECT_DIR$/processor/processor.iml" />
     </modules>
   </component>
